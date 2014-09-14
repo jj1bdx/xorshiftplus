@@ -1,0 +1,46 @@
+- Added xorshift generator (modifying Makefile.am).
+- Disabled TRATE in set_globals.c so the sequence generated from the seed is used in the tests from its very first number.
+- Added option -A to set algorithm, parameters and seed for the xorshift generator.
+- Disabled the sums_dtest
+
+dieharder-3.31.1/dieharder/set_globals.c
+46c46
+<                  TPSAMPLES + TTSAMPLES + TPVALUES + TASSESSMENT + 
+---
+>                  TPSAMPLES + TTSAMPLES + TPVALUES + TASSESSMENT + TRATE +
+
+dieharder-3.31.1/dieharder/parsecl.c
+10d9
+< #include <stdint.h>
+57c56
+<  while ((c = getopt(argc,argv,"aA:Bc:D:d:Ff:g:hi:k:lL:m:n:oO:p:P:S:s:t:Vv:W:X:x:Y:y:Z:z:")) != EOF){
+---
+>  while ((c = getopt(argc,argv,"aBc:D:d:Ff:g:hi:k:lL:m:n:oO:p:P:S:s:t:Vv:W:X:x:Y:y:Z:z:")) != EOF){
+62,69d60
+<      case 'A':
+<        ;
+< 		 int A, B, C, algo;
+< 		 uint64_t seed;
+< 		 sscanf( optarg, "%d.%d-%d-%d:%llu", &algo, &A, &B, &C, &seed );
+< 		 void xorshift_set_algo( int, int, int, int, uint64_t );
+< 		 xorshift_set_algo( algo, A, B, C, seed );
+<        break;
+
+dieharder-3.31.1/libdieharder/Makefile.am
+86d85
+< 	rng_xorshift.c \
+
+dieharder-3.31.1/libdieharder/dieharder_rng_types.c
+103,105d102
+<  extern gsl_rng_type *gsl_rng_xorshift;
+<  ADD(gsl_rng_xorshift);
+<  dh_num_dieharder_rngs++;
+
+dieharder-3.31.1/libdieharder/dieharder_test_types.c
+88c88
+< /* ADD_TEST(&diehard_sums_dtest);
+---
+>  ADD_TEST(&diehard_sums_dtest);
+90c90
+< */
+---
