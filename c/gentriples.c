@@ -142,6 +142,18 @@ bool is_full( matrix *x ) {
 int main( int argc, char * argv[] ) {
 	
 	matrix r[64], l[64], id;
+
+	// Initialise All Matrices to zero - FIX PE/27/5/15
+	// Note: For PE's compiler (g++/Cygwin) this was only found to be an issue when declaring smaller matrices
+	// with size < 24. Basically the r[1] matrix looked like garbage.
+	for( int i = 0; i < 64; i++ ) {
+		for( int j = 0; j < 64; j++ ) {
+			r[j].row[i] = 0ULL;
+			l[j].row[i] = 0ULL;
+		}
+		id.row[i] = 0ULL;
+	}
+
 	// Compute basic matrices: identity, (I+L^x), (I+R^x).
 	identity( &id );
 	for( int i = 0; i < 63; i++ ) r[1].row[i+1] |= 1ULL << i;
