@@ -1,5 +1,5 @@
 /*		 
- * Copyright (C) 2014 Sebastiano Vigna 
+ * Copyright (C) 2014-2015 Sebastiano Vigna 
  *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -31,7 +31,7 @@
 /* The internal state of the generator. */
 static uint64_t x = 0x1LL;
 
-/* The current 64-bit value output by the generator (this is not x if STAR32/STAR8/STAR2 is defined.) */
+/* The current 64-bit value output by the generator (this is not x if STAR32/STAR8/STAR2/STAR5 is defined.) */
 static uint64_t y;
 
 /* The three shifts. */
@@ -52,7 +52,7 @@ X7 = (I+Lc)(I+La)(I+Rb),
 X8 = (I+Ra)(I+Rc)(I+Lb),
 */
 
-#if defined(STAR32) || defined(STAR8) || defined(STAR2)
+#if defined(STAR32) || defined(STAR8) || defined(STAR2) || defined(STAR5)
 
 #ifdef STAR32
 #define NAME "xorshift64*32"
@@ -70,6 +70,12 @@ const int64_t M = 1181783497276652981LL;
 #define NAME "xorshift64*2"
 // Composed with M_2.
 const int64_t M = 8372773778140471301LL;
+#endif
+
+#ifdef STAR5
+#define NAME "xorshift64*5"
+// Composed with 0x5555555555555555
+const int64_t M = 5555555555555555LL;
 #endif
 
 void next0() { x ^= x << A; x ^= x >> B; x ^= x << C; y = REV( x * M ); } // X1

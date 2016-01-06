@@ -1,6 +1,7 @@
-This archive contains the files related to my paper "An experimental
-exploration of Marsaglia's xorshift generators, scrambled". The data
-generated during the experiments is available as a separate download.
+This archive contains the files related to my papers "An experimental
+exploration of Marsaglia's xorshift generators, scrambled" and "Further
+scramblings of Marsaglia's xorshift generators". The data generated during
+the experiments is available as a separate download.
 
 - The files triple64, triple1024 and triple4096 contains the triple 
   giving a full period a state spaces of 64, 1024 and 4096 bits.
