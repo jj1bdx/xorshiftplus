@@ -1,5 +1,5 @@
 /*		 
- * Copyright (C) 2014-2015 Sebastiano Vigna 
+ * Copyright (C) 2014 Sebastiano Vigna 
  *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -16,14 +16,7 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
-#include <assert.h>
-#include <stdbool.h>
-#include <errno.h>
-#include <string.h>
-#include <inttypes.h>
 
 #define NN 312
 #define MM 156
@@ -32,12 +25,12 @@
 #define LM 0x7FFFFFFFULL /* Least significant 31 bits */
 
 /* The array for the state vector */
-static unsigned long long mt[NN]; 
+static unsigned long long mt[NN] = { 1 }; 
 /* mti==NN+1 means mt[NN] is not initialized */
 static int mti=NN+1; 
 
 /* generates a random number on [0, 2^64-1]-interval */
-unsigned long long mt19937_64(void)
+static unsigned long long __inline next(void)
 {
     int i;
     unsigned long long x;
@@ -58,7 +51,6 @@ unsigned long long mt19937_64(void)
         mti = 0;
     }
   
-  
     x = mt[mti++];
 
     x ^= (x >> 29) & 0x5555555555555555ULL;
@@ -69,26 +61,4 @@ unsigned long long mt19937_64(void)
     return x;
 }
 
-int main(int argc, char *argv[] ) {
-	if ( argc != 3 ) {
-		fprintf(stderr, "%s NUMBER WINDOW\n", argv[0] );
-		exit(1);
-	}
-	const int n = atoi( argv[1] );
-	const int k = atoi( argv[2] );
-	unsigned long long c[ n + k ];
-	memset( c, 0, sizeof c );
-	
-	for( int b = 0; b < 19937; b++ ) {
-		memset( mt, 0, sizeof mt );
-		mt[ b / 64 ] |= 1ULL << ( 63 - b % 64 );
-
-		for( int i = 0; i < n; i++ ) {	
-			const int t = __builtin_popcountll( mt19937_64() );
-			for( int j = 0; j < k; j++ ) c[ i + j ] += t;
-		}
-	}
-
-	double norm = 1. / ( 19937 * k * 64 );
-	for( int i = k; i < n; i++ ) printf( "%f\n", c[ i ] * norm );
-}
+#include "harness.c"

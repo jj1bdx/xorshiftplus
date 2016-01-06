@@ -1,6 +1,6 @@
 # xorshift* / xorshift+
 
-This directory contains the contents of xorshift-1.1.0.tgz.
+This directory contains the contents of xorshift-1.1.2.tgz.
 
 (See <http://xorshift.di.unimi.it/> for the original archive.)
 
@@ -8,35 +8,36 @@ For the licensing details, see each individual file.
 
 ## README
 
-This archive contains the files related to my paper "An experimental
-exploration of Marsaglia's xorshift generators, scrambled". The data
-generated during the experiments is available as a separate download
+This archive contains the files related to my papers "An experimental
+exploration of Marsaglia's xorshift generators, scrambled" and "Further
+scramblings of Marsaglia's xorshift generators". The data generated during
+the experiments is available as a separate download
 at <http://xorshift.di.unimi.it/xorshift-data.tar.bz2>.
 
-* The files triple64, triple1024 and triple4096 contains the triple 
+- The files triple64, triple1024 and triple4096 contains the triple 
   giving a full period a state spaces of 64, 1024 and 4096 bits.
 
-* The directory `data` contains scripts eval-01.rb and eval-db.rb, which
+- The directory `data` contains scripts eval-01.rb and eval-db.rb, which
   analyze the results of TestU01/Dieharder and print a succint report of
   the test results. For example,
 
-	    ./eval-01.rb test-xorshift64-small >xorshift64-small
+        ./eval-01.rb test-xorshift64-small >xorshift64-small
   
   will produce data for SmallCrush on the xorshift64 generators.
 
   The script conj.sh can be used with xorshift data to get combined
   results for xorshift conjugate generators:
 
-	    ./conj.sh <xorshift64-small
+        ./conj.sh <xorshift64-small
 
   The script ./sum.sh can instead be used to add values from standard
   and reverse generators. For instance,
 
-	    ./eval-01.rb test-xorshift64star32-medium >xorshift64star32-medium
-	    ./eval-01.rb test-xorshift64star32-medium-rev >xorshift64star32-medium-rev
-	    ./sum.sh xorshift64star32-medium xorshift64star32-medium-rev >xorshift64star32-medium-comb
+        ./eval-01.rb test-xorshift64star32-medium >xorshift64star32-medium
+        ./eval-01.rb test-xorshift64star32-medium-rev >xorshift64star32-medium-rev
+        ./sum.sh xorshift64star32-medium xorshift64star32-medium-rev >xorshift64star32-medium-comb
 
-* The directory `scripts` contains the scripts used to generate the results
+- The directory `scripts` contains the scripts used to generate the results
   in `data`. This includes bash scripts used to run the tests and Ruby scripts
   used to generate the seeds. Each script is associated with the directory
   in `data` with the same name prefixed with `test-`. Note that some of the
